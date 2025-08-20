@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AutoBooked AI – Turn Missed Calls into Booked Appointments</title>
+  <meta name="description" content="AutoBooked AI follows up missed calls, website enquiries and DMs automatically to book appointments straight into your calendar." />
+  <meta name="theme-color" content="#111827" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AutoBooked AI – Turn Missed Calls into Booked Appointments" />
+  <meta property="og:description" content="Never lose a lead again. AI follow-ups via SMS/WhatsApp + website chat that books straight into your calendar." />
+  <meta property="og:url" content="https://autobookedai.co.uk" />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121735;
+      --muted:#97a0c3;
+      --text:#eef2ff;
+      --brand:#7c5cff;
+      --brand-2:#16db93;
+      --ring: rgba(124,92,255,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text); background: radial-gradient(1200px 600px at 20% -10%, #21307b44, transparent 60%),
+                         radial-gradient(900px 500px at 90% 10%, #7c5cff22, transparent 60%),
+                         var(--bg);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin-inline:auto; padding: clamp(16px, 3vw, 32px)}
+    .btn{
+      display:inline-flex; align-items:center; gap:.5rem; border:1px solid #ffffff22;
+      padding:.9rem 1.1rem; border-radius:.9rem; font-weight:700; letter-spacing:.2px;
+      transition:.2s transform, .2s box-shadow, .2s background;
+      background: linear-gradient(180deg, #7c5cff, #5b39ff);
+      box-shadow: 0 10px 30px -10px var(--ring);
+      cursor:pointer;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn.secondary{background:#1b214a}
+    .badge{display:inline-block; padding:.35rem .6rem; background:#1b214a; color:#c7cff9; border-radius:999px; font-size:.8rem}
+    header{
+      position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px);
+      background:#0b1020cc; border-bottom:1px solid #ffffff12; z-index:30;
+    }
+    nav{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+    .nav-links{display:flex; gap:1rem; flex-wrap:wrap}
+    .logo{display:flex; align-items:center; gap:.6rem; font-weight:900; letter-spacing:.3px}
+    .logo-mark{width:34px; height:34px; border-radius:10px; background:
+      conic-gradient(from 200deg, #7c5cff, #16db93, #7c5cff);
+      box-shadow: inset 0 0 0 2px #ffffff22, 0 8px 25px -10px var(--ring);
+    }
+    .hero{padding-top:48px; padding-bottom:24px}
+    .hero-inner{display:grid; grid-template-columns: 1.15fr .85fr; gap: clamp(16px, 4vw, 40px)}
+    @media (max-width: 960px){ .hero-inner{grid-template-columns: 1fr} }
+    h1{font-size: clamp(32px, 4.4vw, 54px); line-height:1.1; margin:.2em 0 .3em}
+    p.lead{font-size: clamp(16px, 2vw, 19px); color:var(--muted); margin:0 0 1.1rem}
+    .card{
+      background: linear-gradient(180deg, #141a3a, #0f1430); border:1px solid #ffffff14;
+      border-radius: 18px; padding: clamp(14px, 2.2vw, 22px);
+      box-shadow: 0 10px 30px -10px #0006;
+    }
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+    @media (max-width: 900px){ .grid-3{grid-template-columns:1fr 1fr} .grid-4{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid-3,.grid-4{grid-template-columns:1fr} }
+    .kpi{display:flex; flex-direction:column; gap:.2rem}
+    .kpi .num{font-weight:900; font-size:1.6rem}
+    .muted{color:var(--muted)}
+    .section{padding: 14px 0 36px}
+    .section h2{font-size: clamp(22px, 3vw, 34px); margin: 0 0 .6rem}
+    .list{display:grid; gap:.5rem; margin:0; padding:0; list-style:none}
+    .list li{display:flex; gap:.6rem; align-items:flex-start}
+    .tick{font-weight:900; color:var(--brand-2)}
+    .step{display:flex; gap:.9rem}
+    .step .num{width:34px; height:34px; flex:0 0 34px; border-radius:10px; background:#1b214a; display:grid; place-items:center; font-weight:800}
+    .price{ display:flex; align-items:baseline; gap:.35rem; font-size:2rem; font-weight:900 }
+    .price small{font-size:.85rem; color:#c7cff9}
+    .plan .features{margin-top:.6rem}
+    .footer{border-top:1px solid #ffffff1a; padding: 30px 0 60px; color:#c7cff9}
+    .footer a{color:#c7cff9}
+    .inline-note{font-size:.85rem; color:#b7bfe8}
+    .shadow-ring{box-shadow: 0 0 0 6px var(--ring)}
+    .calendly-wrap{min-height:680px}
+    .cookie{
+      position: fixed; inset:auto 16px 16px 16px; z-index:50; display:none;
+      background:#0f1430; border:1px solid #ffffff22; border-radius:14px; padding:14px; color:#c7cff9
+    }
+    .cookie.show{display:block}
+    .cookie .actions{display:flex; gap:10px; margin-top:10px}
+    .link{color:#cdd5ff; text-decoration:underline; text-decoration-color:#7c5cff66}
+    .legal h3{margin:.6rem 0 .2rem}
+    .legal p, .legal li{color:#cdd5ff; font-size:.95rem}
+    .tag{display:inline-block; font-size:.75rem; padding:.25rem .5rem; border:1px solid #ffffff1f; border-radius:999px; color:#c7cff9}
+  </style>
+
+  <!-- Calendly -->
+  <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"AutoBooked AI",
+    "url":"https://autobookedai.co.uk",
+    "logo":"https://autobookedai.co.uk/favicon.png",
+    "sameAs":["https://www.instagram.com/","https://www.facebook.com/"],
+    "contactPoint":{
+      "@type":"ContactPoint",
+      "contactType":"sales",
+      "email":"hello@autobookedai.co.uk",
+      "areaServed":"GB"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#top" aria-label="AutoBooked AI Home">
+          <span class="logo-mark" aria-hidden="true"></span>
+          <span>AutoBooked&nbsp;AI</span>
+        </a>
+        <div class="nav-links" role="navigation" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#how">How it works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
+          <a class="btn" href="#" onclick="openCalendly();return false;" aria-label="Book a 15 minute demo">Book a demo</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="container hero-inner">
+      <div>
+        <span class="badge">Built for local service businesses</span>
+        <h1>Turn missed calls & website visitors into <span style="background:linear-gradient(90deg,#16db93,#7c5cff); -webkit-background-clip:text; background-clip:text; color:transparent">booked appointments</span>.</h1>
+        <p class="lead">AutoBooked AI follows up via SMS/WhatsApp, replies to website visitors, and books straight into your calendar (Calendly/Google). No more chasing leads.</p>
+        <div style="display:flex; gap:.6rem; flex-wrap:wrap; margin:.9rem 0 1.2rem">
+          <a class="btn" href="#" onclick="openCalendly();return false;">Book a 15‑min demo</a>
+          <a class="btn secondary" href="#how">See how it works</a>
+        </div>
+
+        <div class="grid-3" style="margin-top:10px">
+          <div class="card kpi"><span class="num">↑ 20–40%</span><span class="muted">more appointments from missed calls</span></div>
+          <div class="card kpi"><span class="num">⏱ under 60s</span><span class="muted">AI reply time to new enquiries</span></div>
+          <div class="card kpi"><span class="num">🔁 Auto-reminders</span><span class="muted">reduce no‑shows</span></div>
+        </div>
+        <p class="inline-note">Have questions? <a class="link" href="mailto:hello@autobookedai.co.uk">hello@autobookedai.co.uk</a></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:.2rem 0 .6rem">What your customers see</h3>
+        <ul class="list">
+          <li><span class="tick">✔</span><span>Website chat pops up: “Want to book? I can check the diary.”</span></li>
+          <li><span class="tick">✔</span><span>AI collects name, service & preferred time.</span></li>
+          <li><span class="tick">✔</span><span>It offers live slots from your calendar.</span></li>
+          <li><span class="tick">✔</span><span>Instant confirmation + reminders by SMS/email/WhatsApp.</span></li>
+        </ul>
+        <div class="card" style="margin-top:12px; background:#0d1330">
+          <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px">
+            <span class="tag">Live Demo</span>
+            <span class="muted">Calendly embed</span>
+          </div>
+          <div class="calendly-inline-widget calendly-wrap"
+               data-url="https://calendly.com/autobookedai/intro-call"
+               style="min-width:320px; height:640px;"></div>
+          <noscript><p class="muted">Enable JavaScript to book a demo.</p></noscript>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <h2>Everything you need to stop losing leads</h2>
+      <div class="grid-4" style="margin-top:10px">
+        <div class="card">
+          <h3>Missed‑Call → SMS</h3>
+          <p class="muted">If no one answers, the AI texts back in seconds to secure the booking.</p>
+        </div>
+        <div class="card">
+          <h3>Website AI Widget</h3>
+          <p class="muted">Engage visitors, qualify, and book directly on your landing page.</p>
+        </div>
+        <div class="card">
+          <h3>Social DMs</h3>
+          <p class="muted">Facebook/Instagram enquiries answered automatically, routed to your calendar.</p>
+        </div>
+        <div class="card">
+          <h3>Calendar + CRM</h3>
+          <p class="muted">Calendly, Google Calendar & simple CRM pipeline for tracking results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="container">
+      <h2>How it works</h2>
+      <div class="grid-3" style="margin-top:10px">
+        <div class="card step">
+          <div class="num">1</div>
+          <div><strong>Plug in</strong><br><span class="muted">We connect your phone/website/socials + calendar.</span></div>
+        </div>
+        <div class="card step">
+          <div class="num">2</div>
+          <div><strong>Auto‑respond</strong><br><span class="muted">AI replies to missed calls & enquiries instantly.</span></div>
+        </div>
+        <div class="card step">
+          <div class="num">3</div>
+          <div><strong>Book</strong><br><span class="muted">Customer picks a time. You get calendar invites + reminders go out.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Great for</h2>
+      <div class="grid-4" style="margin-top:10px">
+        <div class="card">Dentists & Clinics</div>
+        <div class="card">Gyms & Fitness</div>
+        <div class="card">Trades & Home Services</div>
+        <div class="card">Estate & Letting Agents</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="container">
+      <h2>Simple pricing</h2>
+      <div class="grid-3" style="margin-top:10px">
+        <div class="card plan">
+          <h3>Starter</h3>
+          <div class="price">£299 <small>/mo</small></div>
+          <p class="muted">+ £10 per booked appointment</p>
+          <ul class="list features">
+            <li><span class="tick">✔</span><span>Website widget + missed‑call SMS</span></li>
+            <li><span class="tick">✔</span><span>Calendly/Google Calendar</span></li>
+            <li><span class="tick">✔</span><span>Basic reporting</span></li>
+          </ul>
+          <div style="margin-top:10px">
+            <a class="btn" href="#" onclick="openCalendly();return false;">Start with a demo</a>
+          </div>
+        </div>
+        <div class="card plan shadow-ring">
+          <h3>Growth</h3>
+          <div class="price">£499 <small>/mo</small></div>
+          <p class="muted">+ £8 per booked appointment</p>
+          <ul class="list features">
+            <li><span class="tick">✔</span><span>Everything in Starter</span></li>
+            <li><span class="tick">✔</span><span>Social DM automation</span></li>
+            <li><span class="tick">✔</span><span>No‑show reminders & rescheduling</span></li>
+            <li><span class="tick">✔</span><span>Weekly results report</span></li>
+          </ul>
+          <div style="margin-top:10px">
+            <a class="btn" href="#" onclick="openCalendly();return false;">Book a call</a>
+          </div>
+        </div>
+        <div class="card plan">
+          <h3>Scale</h3>
+          <div class="price">POA</div>
+          <p class="muted">Multi‑location & custom integrations</p>
+          <ul class="list features">
+            <li><span class="tick">✔</span><span>Priority support & SLA</span></li>
+            <li><span class="tick">✔</span><span>Custom flows & webhooks</span></li>
+            <li><span class="tick">✔</span><span>Dedicated success manager</span></li>
+          </ul>
+          <div style="margin-top:10px">
+            <a class="btn" href="#" onclick="openCalendly();return false;">Talk to sales</a>
+          </div>
+        </div>
+      </div>
+      <p class="inline-note">Pricing examples—adjust to your final offer as needed.</p>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <h2>FAQ</h2>
+      <div class="grid-3" style="margin-top:10px">
+        <div class="card">
+          <h3>Do you replace our staff?</h3>
+          <p class="muted">No—our AI handles first response and booking. Your team focuses on delivery.</p>
+        </div>
+        <div class="card">
+          <h3>What calendars do you support?</h3>
+          <p class="muted">Calendly and Google Calendar out of the box. Others via Zapier/Webhooks.</p>
+        </div>
+        <div class="card">
+          <h3>Is it GDPR compliant?</h3>
+          <p class="muted">Yes. Data is processed only for booking & follow‑ups. See our <a class="link" href="#privacy">Privacy Policy</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex; gap:1rem; justify-content:space-between; align-items:center; flex-wrap:wrap">
+        <div class="muted">
+          © 2025 AutoBooked AI. All rights reserved.
+          <div class="inline-note">Email: <a class="link" href="mailto:hello@autobookedai.co.uk">hello@autobookedai.co.uk</a></div>
+        </div>
+        <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap">
+          <a class="link" href="#privacy">Privacy</a>
+          <a class="link" href="#terms">Terms</a>
+          <a class="btn secondary" href="#" onclick="openCalendly();return false;">Book a demo</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <section class="section legal" id="privacy">
+    <div class="container card">
+      <h2>Privacy Policy</h2>
+      <p>We process personal data (name, contact details, appointment preferences, and message content) to schedule appointments and send confirmations/reminders. Legal basis: performance of a contract and legitimate interests in responding to enquiries.</p>
+      <h3>Data we collect</h3>
+      <ul>
+        <li>Contact details you submit via chat/forms/SMS/DMs</li>
+        <li>Appointment selections and status updates</li>
+        <li>Technical data (device, timestamps) to improve reliability</li>
+      </ul>
+      <h3>Sharing</h3>
+      <p>We share data with service providers strictly for booking, messaging, analytics, and hosting. We don’t sell personal data.</p>
+      <h3>Retention</h3>
+      <p>We retain booking records for as long as necessary to provide services and meet legal obligations. You can request deletion at any time.</p>
+      <h3>Your rights</h3>
+      <p>You can request access, correction, deletion, or restriction. Contact: <a class="link" href="mailto:hello@autobookedai.co.uk">hello@autobookedai.co.uk</a>.</p>
+      <p class="inline-note">Data Controller: <strong>AutoBooked AI</strong> (UK). Address: <em>PLACEHOLDER business address</em>.</p>
+    </div>
+  </section>
+
+  <section class="section legal" id="terms">
+    <div class="container card">
+      <h2>Terms & Conditions</h2>
+      <h3>Service</h3>
+      <p>We provide AI-driven lead response and appointment booking via website widgets, SMS/WhatsApp, and social DMs, integrating with your calendar/CRM.</p>
+      <h3>Client obligations</h3>
+      <ul>
+        <li>Provide accurate calendar availability and service details.</li>
+        <li>Comply with applicable laws (privacy, marketing consents, messaging policies).</li>
+        <li>Not use the service for unlawful or misleading communications.</li>
+      </ul>
+      <h3>Fees & billing</h3>
+      <p>Plans are billed monthly in advance; per‑appointment fees are billed in arrears (if applicable). Failed or fraudulent bookings are excluded upon evidence.</p>
+      <h3>Results</h3>
+      <p>No guarantee of a specific number of appointments; outcomes vary by demand, response policies, and calendar capacity.</p>
+      <h3>Data protection</h3>
+      <p>We act as a processor for end‑customer data on your behalf. A data processing addendum (DPA) is available upon request.</p>
+      <h3>Liability</h3>
+      <p>Our total liability is limited to the fees paid in the previous 3 months, except for death/personal injury caused by negligence or fraud.</p>
+      <h3>Cancellation</h3>
+      <p>Monthly plans can be cancelled any time before the next renewal. On termination we’ll disable integrations and delete or return data upon request.</p>
+      <p class="inline-note">Company details: <em>AutoBooked AI – PLACEHOLDER Company Reg / VAT if applicable</em>.</p>
+    </div>
+  </section>
+
+  <div class="cookie" id="cookie">
+    <div><strong>We use cookies</strong> to operate the booking widget, measure performance, and improve the site.
+      See our <a class="link" href="#privacy">Privacy Policy</a>.
+    </div>
+    <div class="actions">
+      <button class="btn secondary" onclick="dismissCookie()">Manage</button>
+      <button class="btn" onclick="acceptCookie()">Accept</button>
+    </div>
+  </div>
+
+  <script>
+    function openCalendly(){
+      if (window.Calendly) {
+        Calendly.initPopupWidget({ url: 'https://calendly.com/autobookedai/intro-call' });
+      } else {
+        window.location.href = 'https://calendly.com/autobookedai/intro-call';
+      }
+    }
+    const cookieKey = "abai_cookie_ok_v1";
+    const cookieEl = document.getElementById('cookie');
+    function showCookie(){ if(!localStorage.getItem(cookieKey)) cookieEl.classList.add('show'); }
+    function acceptCookie(){ localStorage.setItem(cookieKey, '1'); cookieEl.classList.remove('show'); }
+    function dismissCookie(){ cookieEl.classList.remove('show'); }
+    document.addEventListener('DOMContentLoaded', showCookie);
+  </script>
+
+</body>
+</html>
